@@ -1,0 +1,5 @@
+{"P001": {"name": "Anant Sharma", "city":"Shimla","age":27,"gender":"Male","height":172,"weight":80.0,"bmi":"33.06","verdict":"obese"},
+"P002": {"name": "Antim Sharma", "city":"Shamli","age":27,"gender":"Female","height":162,"weight":60.0,"bmi":"32.06","verdict":"underweight"},
+"P003": {"name": "Avi Sharma", "city":"goa","age":27,"gender":"Male","height":164,"weight":70.0,"bmi":"31.06","verdict":"overweight"},
+"P004": {"name": "Arvi Sharma", "city":"gzb","age":27,"gender":"Female","height":161,"weight":75.0,"bmi":"34.06","verdict":"underweight"},
+"P005": {"name": "Akshu Sharma", "city":"Noida","age":27,"gender":"Male","height":152,"weight":78.0,"bmi":"23.06","verdict":"obese"}}
