@@ -1,63 +1,367 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Patient Management System</title>
+
+    <title>CarePoint | Patient Management</title>
+
+    <link rel="stylesheet" href="/static/style.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="/static/script.js" defer></script>
 </head>
-<link rel="stylesheet" href="../static/style.css">
+
 <body>
-    <h1>Patient Management System</h1>
 
-    <h2>Add New Patient</h2>
+    <div class="dashboard">
 
-    <form id="patient-form">
+        <!-- Sidebar -->
+        <aside class="sidebar">
 
-        <label for="patient-id">Patient ID:</label>
-        <input type="text" id="patient-id" required>
+            <div class="brand">
+                <div class="brand-icon">
+                    <i data-lucide="heart-pulse"></i>
+                </div>
 
-        <br><br>
+                <div>
+                    <h2>CarePoint</h2>
+                    <p>Patient Management</p>
+                </div>
+            </div>
 
-        <label for="name">Patient Name:</label>
-        <input type="text" id="name" required>
+            <nav class="navigation">
+                <a href="#dashboard" class="nav-link active">
+                    <i data-lucide="layout-dashboard"></i>
+                    <span>Dashboard</span>
+                </a>
 
-        <br><br>
+                <a href="#appointments" class="nav-link">
+                    <i data-lucide="calendar-days"></i>
+                    <span>Appointments</span>
+                </a>
 
-        <label for="city">City:</label>
-        <input type="text" id="city" required>
+                <a href="#patients" class="nav-link">
+                    <i data-lucide="users"></i>
+                    <span>Patients</span>
+                </a>
 
-        <br><br>
+                <a href="#settings" class="nav-link">
+                    <i data-lucide="settings"></i>
+                    <span>Settings</span>
+                </a>
+            </nav>
 
-        <label for="age">Age:</label>
-        <input type="number" id="age" min="1" max="119" required>
+            <button class="add-patient-sidebar" id="open-patient-form">
+                <i data-lucide="plus"></i>
+                Add Patient
+            </button>
 
-        <br><br>
+            <div class="sidebar-footer">
+                <div class="profile-avatar">CP</div>
+                <div>
+                    <strong>CarePoint Admin</strong>
+                    <p>Administrator</p>
+                </div>
+            </div>
 
-        <label for="gender">Gender:</label>
+        </aside>
 
-        <select id="gender" required>
-            <option value="">Select Gender</option>
-            <option value="male">Male</option>
-            <option value="female">Female</option>
-            <option value="others">Others</option>
-        </select>
 
-        <br><br>
+        <!-- Main Content -->
+        <main class="main-content" id="dashboard">
 
-        <label for="height">Height (metres):</label>
-        <input type="number" id="height" min="0.01" step="0.01" required>
+            <!-- Top Bar -->
+            <header class="topbar">
 
-        <br><br>
+                <div class="mobile-brand">
+                    <i data-lucide="heart-pulse"></i>
+                    CarePoint
+                </div>
 
-        <label for="weight">Weight (kg):</label>
-        <input type="number" id="weight" min="0.01" step="0.1" required>
+                <div class="search-box">
+                    <i data-lucide="search"></i>
 
-        <br><br>
+                    <input
+                        type="search"
+                        id="patient-search"
+                        placeholder="Search patients by name or ID..."
+                    >
+                </div>
 
-        <button type="submit">Add Patient</button>
+                <div class="topbar-right">
+                    <span class="today-date" id="today-date"></span>
 
-    </form>
+                    <div class="notification-icon">
+                        <i data-lucide="bell"></i>
+                    </div>
 
-    
+                    <div class="profile-avatar">CP</div>
+                </div>
+
+            </header>
+
+
+            <!-- Dashboard Content -->
+            <div class="content-area">
+
+                <!-- Welcome Banner -->
+                <section class="welcome-banner">
+
+                    <div class="welcome-text">
+                        <span class="eyebrow">YOUR HEALTHCARE OVERVIEW</span>
+
+                        <h1>Good morning, Doctor!</h1>
+
+                        <p>
+                            Welcome to your dashboard.
+                            Manage patient records all in one place.
+                        </p>
+
+                        <button id="banner-add-patient" class="banner-button">
+                            <i data-lucide="plus"></i>
+                            Add New Patient
+                        </button>
+                    </div>
+
+                    <div class="welcome-art">
+                        <i data-lucide="stethoscope"></i>
+                        <span class="art-circle circle-one"></span>
+                        <span class="art-circle circle-two"></span>
+                    </div>
+
+                </section>
+
+
+                <!-- Statistics -->
+                <section class="stats-grid">
+
+                    <article class="stat-card">
+                        <div class="stat-icon purple">
+                            <i data-lucide="calendar-check"></i>
+                        </div>
+
+                        <div class="stat-content">
+                            <p>Appointments</p>
+                            <h2 id="appointment-count">—</h2>
+                            <span class="stat-note">Appointment tracking coming soon</span>
+                        </div>
+                    </article>
+
+
+                    <article class="stat-card">
+                        <div class="stat-icon orange">
+                            <i data-lucide="users"></i>
+                        </div>
+
+                        <div class="stat-content">
+                            <p>Total Patients</p>
+                            <h2 id="total-patients">0</h2>
+                            <span class="stat-note">All registered patients</span>
+                        </div>
+                    </article>
+
+
+                    <article class="stat-card">
+                        <div class="stat-icon blue">
+                            <i data-lucide="user-plus"></i>
+                        </div>
+
+                        <div class="stat-content">
+                            <p>New Patients</p>
+                            <h2 id="new-patients">0</h2>
+                            <span class="stat-note">Registered today</span>
+                        </div>
+                    </article>
+
+                </section>
+
+
+                <!-- Chart -->
+                <section class="panel chart-panel">
+
+                    <div class="panel-heading">
+                        <div>
+                            <h2>Patient Overview</h2>
+                            <p>Patient distribution by gender</p>
+                        </div>
+
+                        <span class="chart-badge">Current Records</span>
+                    </div>
+
+                    <div class="chart-container">
+                        <canvas id="patient-chart"></canvas>
+                    </div>
+
+                </section>
+
+
+                <!-- Recent Patients -->
+                <section class="panel patients-panel" id="patients">
+
+                    <div class="panel-heading patients-heading">
+                        <div>
+                            <h2>Recent Patients</h2>
+                            <p>View and manage patient records</p>
+                        </div>
+
+                        <button class="primary-button" id="table-add-patient">
+                            <i data-lucide="plus"></i>
+                            Add Patient
+                        </button>
+                    </div>
+
+
+                    <!-- Patient Table -->
+                    <div class="table-wrapper">
+
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Patient</th>
+                                    <th>Patient ID</th>
+                                    <th>Age</th>
+                                    <th>Gender</th>
+                                    <th>BMI</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+
+                            <tbody id="patient-table-body">
+                                <tr>
+                                    <td colspan="6" class="loading-message">
+                                        Loading patient records...
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+
+                    <p class="table-footer" id="patient-count-label">
+                        Loading records...
+                    </p>
+
+                </section>
+
+
+                <!-- Add Patient Form -->
+                <section class="panel form-panel" id="add-patient-section">
+
+                    <div class="panel-heading">
+                        <div>
+                            <h2>Add New Patient</h2>
+                            <p>Enter the patient's details below</p>
+                        </div>
+                    </div>
+
+                    <form id="patient-form">
+
+                        <div class="form-field">
+                            <label for="patient-id">Patient ID</label>
+                            <input
+                                type="text"
+                                id="patient-id"
+                                placeholder="e.g. P101"
+                                required
+                            >
+                        </div>
+
+                        <div class="form-field">
+                            <label for="name">Full Name</label>
+                            <input
+                                type="text"
+                                id="name"
+                                placeholder="Enter full name"
+                                required
+                            >
+                        </div>
+
+                        <div class="form-field">
+                            <label for="city">City</label>
+                            <input
+                                type="text"
+                                id="city"
+                                placeholder="Enter city"
+                                required
+                            >
+                        </div>
+
+                        <div class="form-field">
+                            <label for="age">Age</label>
+                            <input
+                                type="number"
+                                id="age"
+                                min="1"
+                                max="119"
+                                placeholder="Enter age"
+                                required
+                            >
+                        </div>
+
+                        <div class="form-field">
+                            <label for="gender">Gender</label>
+                            <select id="gender" required>
+                                <option value="">Select gender</option>
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                                <option value="others">Others</option>
+                            </select>
+                        </div>
+
+                        <div class="form-field">
+                            <label for="height">Height (metres)</label>
+                            <input
+                                type="number"
+                                id="height"
+                                min="0.01"
+                                step="0.01"
+                                placeholder="e.g. 1.65"
+                                required
+                            >
+                        </div>
+
+                        <div class="form-field">
+                            <label for="weight">Weight (kg)</label>
+                            <input
+                                type="number"
+                                id="weight"
+                                min="0.01"
+                                step="0.1"
+                                placeholder="e.g. 60"
+                                required
+                            >
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="reset" class="secondary-button">
+                                Clear Form
+                            </button>
+
+                            <button type="submit" class="primary-button">
+                                <i data-lucide="user-plus"></i>
+                                Save Patient
+                            </button>
+                        </div>
+
+                    </form>
+
+                    <p id="form-message" class="form-message" role="status"></p>
+
+                </section>
+
+                <footer class="page-footer">
+                    <p>CarePoint Patient Management System</p>
+                    <span>Built with HTML, CSS, JavaScript & FastAPI</span>
+                </footer>
+
+            </div>
+
+        </main>
+
+    </div>
+
+
 </body>
 </html>

@@ -2,10 +2,16 @@ from fastapi import FastAPI, Path, HTTPException,Query
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel,Field, computed_field
 from typing import Annotated,Literal, Optional
+from fastapi.staticfiles import StaticFiles
+from fastapi.templating import Jinja2Templates
+from fastapi import Request
 
 import json
 
 app = FastAPI()
+
+app.mount("/static", StaticFiles(directory="static"), name="static")
+templates = Jinja2Templates(directory="templates")
 
 class Patient(BaseModel):
     id:Annotated[str,Field(...,description='ID of the patient',examples=['P001'] )]
@@ -52,6 +58,13 @@ def save_data(data):
     with open('patient.json', 'w') as f:
         json.dump(data, f)
 
+
+@app.get("/app")
+def home(request: Request):
+    return templates.TemplateResponse(
+        request=request,
+        name="index.html"
+    )
 
 @app.get("/")
 def hello():
